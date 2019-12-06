@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Login History</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        {% include "navigation.html" %}
+        <h1>Login History</h1>   
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p id="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}    
+
+        <form action = "/login_history" method = "POST">
+            {{ form.csrf_token }}
+            {% for error in form.user_id.errors %}
+                <p class="error">[{{ error }}]</p>
+            {% endfor %}      
+            <p>{{ form.user_id.label }}: {{ form.user_id(size=20) }} {{ form.submit() }}</p>
+        </form>
+        
+        
+        {% if logs != None %}
+            <h3>Log activity for <span id="log_username">{{ user.username }}</span>:</h3>
+            <ul>
+                {% for log in logs %}
+                    <li class="log_entry" id="login{{ log.id }}">login: <span id="login{{ log.id }}_time">{{ log.login.time() }}</span> logout:<span id="logout{{ log.id }}_time">{{ log.logout.time() if log.logout else 'N/A'}}</span></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </body>
+</html>

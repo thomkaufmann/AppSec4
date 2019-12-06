@@ -1,0 +1,17 @@
+version: "3.6"
+
+services:
+  web:
+    build: ./app
+    image: appsec:1.0
+    ports:
+     - "8080:5000"
+    volumes:
+     - .:/code
+    secrets:
+     - admin_credentials
+    environment:
+      ADMIN_CREDENTIALS: /run/secrets/admin_credentials
+secrets:
+  admin_credentials:
+    file: ./admin_credentials.txt

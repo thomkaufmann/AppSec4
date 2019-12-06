@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>{{ type }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        {% include "navigation.html" %}
+        <h1>{{ type }}</h1>   
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p id="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}       
+        
+        <form action = "/{{ type.lower() }}" method = "POST">
+            {{ form.csrf_token }}
+            <p>{{ form.uname.label }}</p>
+            <p>{{ form.uname(size=20) }}</p>
+            {% for error in form.uname.errors %}
+                <p class="error">[{{ error }}]</p>
+            {% endfor %}                     
+            <p>{{ form.pword.label }}</p> 
+            <p>{{ form.pword(size=20) }}</p>     
+            {% for error in form.pword.errors %}
+                <p class="error">[{{ error }}]</p>
+            {% endfor %}   
+            <p>{{ form.pin.label }}</p> 
+            <p>{{ form.pin(size=20) }}</p>   
+            {% for error in form.pin.errors %}
+                <p class="error">[{{ error }}]</p>
+            {% endfor %} 
+            <p>{{ form.submit() }}</p>
+        </form>
+    </body>
+</html>

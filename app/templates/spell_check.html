@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Spell Check</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>    
+    <body>
+        {% include "navigation.html" %}
+        <h1>Spell Check</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p id="result">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}    
+
+        <form action="{{ url_for('spell_check') }}" method="POST">
+           {{ form.csrf_token }}
+           <p>{{ form.inputtext.label }}</p> 
+           {{ form.inputtext }}    
+            {% for error in form.inputtext.errors %}
+                <p class="error">[{{ error }}]</p>
+            {% endfor %}        
+            <p>{{ form.submit() }}</p>
+        </form>
+        <p>{{ form.textout.label }}</p> 
+        <p>{{ form.textout }}</p>    
+        <p>{{ form.misspelled.label }}</p> 
+        <p>{{ form.misspelled }}</p>  
+    </body>
+</html>

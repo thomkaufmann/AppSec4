@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>History</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+    <body>
+        {% include "navigation.html" %}
+        <h1>History</h1>   
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p id="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}    
+
+        {% if user.admin %}
+            <form action = "/history" method = "POST">
+                {{ form.csrf_token }}
+                {% for error in form.uname.errors %}
+                    <p class="error">[{{ error }}]</p>
+                {% endfor %}      
+                <p>{{ form.uname.label }}: {{ form.uname(size=20) }} {{ form.submit() }}</p>
+            </form>
+        {% endif %} 
+
+        <h3>Submissions made by {{ user.username }}: <span id="numqueries">{{ count }}</span></h3>
+        
+        {% for submission in submissions %}
+            <p><a class="query_link" id="query{{ submission.id}}" href="/history/query{{ submission.id}}">Query {{ submission.id }}</a></p>
+        {% endfor %}
+    </body>
+</html>

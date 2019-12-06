@@ -1,0 +1,16 @@
+ul#navigation {
+    list-style-type: none;
+    padding: 0 0 20px 0;
+}
+ul#navigation li {
+    float: left;
+}
+ul#navigation li a {
+    padding-right: 16px;
+}
+h1 {
+    clear: both;
+}
+.error {
+    color: red;
+}

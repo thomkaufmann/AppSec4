@@ -1,0 +1,14 @@
+
+<ul id="navigation">
+    {% if not session['user_id'] %}
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    {% else %}
+        <li><a href="{{ url_for('spell_check') }}">Spell Check</a></li>
+        <li><a href="{{ url_for('history') }}">History</a></li>
+        {% if session['admin'] %}
+            <li><a href="{{ url_for('login_history') }}">Login History</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    {% endif %}
+</ul>
